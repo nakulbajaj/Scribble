@@ -11,16 +11,54 @@ import ReplayKit
 
 class ViewController: UIViewController, RPPreviewViewControllerDelegate{
 
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var slider: UISlider!
     
-    @IBOutlet var brushButton: UIButton!
+    @IBOutlet var imageView: UIImageView!
     
     var lastPoint = CGPoint.zero
     var swiped = false
+    var thickness:Int = 5
+    var isEraserSelected = false;
+    var currentColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+    
+    @IBOutlet var greenColor: UIButton!
+    @IBOutlet var redColor: UIButton!
+    @IBOutlet var blueColor: UIButton!
+    @IBOutlet var blackColor: UIButton!
+    @IBOutlet var paintPressed: UIButton!
+    
+    @IBOutlet var stopButton: UIButton!
+    @IBOutlet var eraserButton: UIButton!
+    @IBAction func eraserPressed(_ sender: UIButton) {
+        if(isEraserSelected == false){
+        currentColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1.0)
+            eraserButton.setImage(UIImage(named: "pencil"), for: UIControlState.normal)
+            hideEverything()
+            isEraserSelected = true
+        }
+        else {
+            currentColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+            eraserButton.setImage(UIImage(named: "eraser"), for: UIControlState.normal)
+            revealPalette()
+            isEraserSelected = false
+        }
+    }
+
+    func hideEverything(){
+        paintPressed.isHidden=true;
+        blackColor.isHidden=true;
+        greenColor.isHidden=true;
+        blueColor.isHidden=true;
+        redColor.isHidden=true;
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        revealPalette()
+        buttonCrazy()
         startRecording()
+        
       
     }
     
@@ -28,8 +66,23 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
         return .landscape
     }
     
+    func buttonCrazy(){
+        stopButton.layer.cornerRadius = 40
+        stopButton.clipsToBounds = true
+        blueColor.layer.cornerRadius = 20
+        blueColor.clipsToBounds = true
+        redColor.layer.cornerRadius = 20
+        redColor.clipsToBounds = true
+        greenColor.layer.cornerRadius = 20
+        greenColor.clipsToBounds = true
+        blackColor.layer.cornerRadius = 20
+        blackColor.clipsToBounds = true
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        revealPalette()
+        buttonCrazy()
         let value = UIInterfaceOrientation.landscapeRight.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
     }
@@ -84,8 +137,8 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
         
         context?.setBlendMode(CGBlendMode.normal)
         context?.setLineCap(CGLineCap.round)
-        context?.setLineWidth(5)
-        context?.setStrokeColor(UIColor(red: 0, green: 0, blue: 0, alpha: 1.0).cgColor)
+        context?.setLineWidth(CGFloat(thickness))
+        context?.setStrokeColor(currentColor.cgColor)
         
         context?.strokePath()
         
@@ -115,14 +168,52 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func isPaintPressed() {
+        hidePalette()
+    }
+    @IBAction func isBlackPressed() {
+        currentColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        revealPalette()
+    }
+    
+    @IBAction func isGreenPressed() {
+        currentColor = UIColor(red: 0, green: 255, blue: 0, alpha: 1.0)
+        revealPalette()
+    }
+    
+    @IBAction func isRedPressed() {
+        currentColor = UIColor(red: 255, green: 0, blue: 0, alpha: 1.0)
+        revealPalette()
+    }
+    
+    @IBAction func isBluePressed() {
+        currentColor = UIColor(red: 28/255, green: 164/255, blue: 252/255, alpha: 1.0)
+        revealPalette()
+    }
+    
+    
+    func revealPalette(){
+        paintPressed.isHidden=false;
+        blackColor.isHidden=true;
+        greenColor.isHidden=true;
+        blueColor.isHidden=true;
+        redColor.isHidden=true;
+    }
+    func hidePalette(){
+        paintPressed.isHidden=true;
+        blackColor.isHidden=false;
+        greenColor.isHidden=false;
+        blueColor.isHidden=false;
+        redColor.isHidden=false;
+    }
     @IBAction func stopButtonPressed(_ sender: Any) {
         stopRecording()
     }
 
-    @IBAction func changeStrokePressed() {
-        brushButton.isHidden=true;
-        
+    @IBAction func sliderValueChanged(_ sender: UISlider) {
+        thickness = Int(sender.value)
     }
+    
 
 }
 
