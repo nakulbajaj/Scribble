@@ -12,7 +12,7 @@ import ReplayKit
 class ViewController: UIViewController, RPPreviewViewControllerDelegate{
 
     @IBOutlet var slider: UISlider!
-    
+    var bounds = UIScreen.main.bounds
     @IBOutlet var imageView: UIImageView!
     
     var lastPoint = CGPoint.zero
@@ -52,6 +52,9 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
         redColor.isHidden=true;
     }
     
+    @IBAction func clearEverything() {
+    self.imageView.image = nil
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -89,12 +92,20 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
     
     func startRecording() {
         let recorder = RPScreenRecorder.shared()
+        recorder.isCameraEnabled = true
+        recorder.isMicrophoneEnabled = true
         
-        recorder.startRecording(withMicrophoneEnabled: true) { [unowned self] (error) in
+        recorder.startRecording { [unowned self] (error) in
             if let unwrappedError = error {
                 print(unwrappedError.localizedDescription)
             } else {
-                
+                if let cameraPreview = RPScreenRecorder.shared().cameraPreviewView {
+                    cameraPreview.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                    self.view.addSubview(cameraPreview)
+//                    cameraPreview.layer.borderWidth = 5
+//                    cameraPreview.layer.borderColor = UIColor(red:0/255.0, green:0/255.0, blue:0/255.0, alpha: 0.75).cgColor
+            }
+            
             }
         }
     }
