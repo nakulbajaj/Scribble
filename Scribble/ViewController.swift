@@ -100,10 +100,10 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
                 print(unwrappedError.localizedDescription)
             } else {
                 if let cameraPreview = RPScreenRecorder.shared().cameraPreviewView {
-                    cameraPreview.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                    cameraPreview.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
                     self.view.addSubview(cameraPreview)
-//                    cameraPreview.layer.borderWidth = 5
-//                    cameraPreview.layer.borderColor = UIColor(red:0/255.0, green:0/255.0, blue:0/255.0, alpha: 0.75).cgColor
+                    cameraPreview.layer.borderWidth = 10
+                    cameraPreview.layer.borderColor = UIColor(red:0/255.0, green:0/255.0, blue:0/255.0, alpha: 0.25).cgColor
             }
             
             }
