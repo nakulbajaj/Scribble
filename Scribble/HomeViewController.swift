@@ -28,6 +28,14 @@ class HomeViewController: UIViewController {
     }
     
 
+  
+    
+    @IBAction func facebook(_ sender: Any) {
+        if let url = NSURL(string: "http://facebook.com") {
+            UIApplication.shared.openURL(url as URL)
+        }
+        
+    }
     /*
     // MARK: - Navigation
 
