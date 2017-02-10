@@ -9,17 +9,21 @@
 import UIKit
 import ReplayKit
 
+
+class SharingManager {
+    var sharedColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+    var sharedThickness: CGFloat = 5
+    static let sharedInstance = SharingManager()
+}
+
 class ViewController: UIViewController, RPPreviewViewControllerDelegate{
 
     @IBOutlet var slider: UISlider!
     var bounds = UIScreen.main.bounds
-    @IBOutlet var imageView: UIImageView!
+    static let sharedInstance = ViewController()
     
-    var lastPoint = CGPoint.zero
-    var swiped = false
-    var thickness:Int = 5
     var isEraserSelected = false
-    var currentColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+
     
     @IBOutlet var greenColor: UIButton!
     @IBOutlet var redColor: UIButton!
@@ -29,15 +33,17 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
     
     @IBOutlet var stopButton: UIButton!
     @IBOutlet var eraserButton: UIButton!
+    
+    
     @IBAction func eraserPressed(_ sender: UIButton) {
         if(isEraserSelected == false){
-        currentColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1.0)
+        SharingManager.sharedInstance.sharedColor = UIColor(red: 255, green: 255, blue: 255, alpha: 1.0)
             eraserButton.setImage(UIImage(named: "pencil"), for: UIControlState.normal)
             hideEverything()
             isEraserSelected = true
         }
         else {
-            currentColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+            SharingManager.sharedInstance.sharedColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
             eraserButton.setImage(UIImage(named: "eraser"), for: UIControlState.normal)
             revealPalette()
             isEraserSelected = false
@@ -53,16 +59,17 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
     }
     
     @IBAction func clearEverything() {
-    self.imageView.image = nil
+ //Do something
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         revealPalette()
         buttonCrazy()
         startRecording()
-        
-      
+        SharingManager.sharedInstance.sharedColor = UIColor.black
+        SharingManager.sharedInstance.sharedThickness = 5
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -136,52 +143,6 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
         self.present(controller, animated: true, completion: nil)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        swiped = false
-        
-        if let touch = touches.first {
-            lastPoint = touch.location(in: self.view)
-        }
-    }
-    
-    func drawLines(fromPoint: CGPoint, toPoint: CGPoint){
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        imageView.image?.draw(in: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        let context = UIGraphicsGetCurrentContext()
-        
-        context?.move(to: CGPoint(x:fromPoint.x, y: fromPoint.y))
-        context?.addLine(to: CGPoint(x: toPoint.x, y: toPoint.y))
-        
-        context?.setBlendMode(CGBlendMode.normal)
-        context?.setLineCap(CGLineCap.round)
-        context?.setLineWidth(CGFloat(thickness))
-        context?.setStrokeColor(currentColor.cgColor)
-        
-        context?.strokePath()
-        
-        imageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        swiped = true
-        
-        if let touch = touches.first {
-            let currentPoint = touch.location(in: self.view)
-            drawLines(fromPoint: lastPoint, toPoint: currentPoint)
-            
-            lastPoint = currentPoint
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !swiped {
-            drawLines(fromPoint: lastPoint, toPoint: lastPoint)
-        }
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -190,23 +151,24 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
         hidePalette()
     }
     @IBAction func isBlackPressed() {
-        currentColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
+        SharingManager.sharedInstance.sharedColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
         revealPalette()
     }
     
     @IBAction func isGreenPressed() {
-        currentColor = UIColor(red: 0, green: 255, blue: 0, alpha: 1.0)
+        SharingManager.sharedInstance.sharedColor = UIColor(red: 0, green: 255, blue: 0, alpha: 1.0)
         revealPalette()
     }
     
     @IBAction func isRedPressed() {
-        currentColor = UIColor(red: 255, green: 0, blue: 0, alpha: 1.0)
+        SharingManager.sharedInstance.sharedColor = UIColor(red: 255, green: 0, blue: 0, alpha: 1.0)
         revealPalette()
     }
     
     @IBAction func isBluePressed() {
-        currentColor = UIColor(red: 28/255, green: 164/255, blue: 252/255, alpha: 1.0)
+        SharingManager.sharedInstance.sharedColor = UIColor(red: 28/255, green: 164/255, blue: 252/255, alpha: 1.0)
         revealPalette()
+        
     }
     
     
@@ -216,6 +178,7 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
         greenColor.isHidden=true;
         blueColor.isHidden=true;
         redColor.isHidden=true;
+
     }
     func hidePalette(){
         paintPressed.isHidden=true;
@@ -229,7 +192,7 @@ class ViewController: UIViewController, RPPreviewViewControllerDelegate{
     }
 
     @IBAction func sliderValueChanged(_ sender: UISlider) {
-        thickness = Int(sender.value)
+        SharingManager.sharedInstance.sharedThickness = CGFloat(sender.value)
     }
     
 

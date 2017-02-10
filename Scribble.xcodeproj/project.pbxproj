@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F42CFFB51E46C85D0048B5EC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42CFFB41E46C85D0048B5EC /* HomeViewController.swift */; };
 		F42CFFB71E46E6F70048B5EC /* TransitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42CFFB61E46E6F70048B5EC /* TransitionViewController.swift */; };
+		F46526151E4CFEAC00CCE437 /* DrawableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46526141E4CFEAC00CCE437 /* DrawableView.swift */; };
 		F46ED0401E46F9E1003B1875 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F46ED03F1E46F9E1003B1875 /* Main.storyboard */; };
 		F4E489691E468D7000B1B081 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E489681E468D7000B1B081 /* AppDelegate.swift */; };
 		F4E4896B1E468D7000B1B081 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E4896A1E468D7000B1B081 /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		F42CFFB41E46C85D0048B5EC /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F42CFFB61E46E6F70048B5EC /* TransitionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionViewController.swift; sourceTree = "<group>"; };
+		F46526141E4CFEAC00CCE437 /* DrawableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawableView.swift; sourceTree = "<group>"; };
 		F46ED03F1E46F9E1003B1875 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F4E489651E468D7000B1B081 /* Scribble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scribble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4E489681E468D7000B1B081 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				F4E489681E468D7000B1B081 /* AppDelegate.swift */,
 				F42CFFB41E46C85D0048B5EC /* HomeViewController.swift */,
 				F4E4896A1E468D7000B1B081 /* ViewController.swift */,
+				F46526141E4CFEAC00CCE437 /* DrawableView.swift */,
 				F42CFFB61E46E6F70048B5EC /* TransitionViewController.swift */,
 				F46ED03F1E46F9E1003B1875 /* Main.storyboard */,
 				F4E4896F1E468D7000B1B081 /* Assets.xcassets */,
@@ -145,6 +148,7 @@
 			files = (
 				F4E4896B1E468D7000B1B081 /* ViewController.swift in Sources */,
 				F4E489691E468D7000B1B081 /* AppDelegate.swift in Sources */,
+				F46526151E4CFEAC00CCE437 /* DrawableView.swift in Sources */,
 				F42CFFB51E46C85D0048B5EC /* HomeViewController.swift in Sources */,
 				F42CFFB71E46E6F70048B5EC /* TransitionViewController.swift in Sources */,
 			);
